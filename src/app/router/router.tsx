@@ -7,11 +7,9 @@ export const RouterProvider = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<MainLayout />}>
-					<Route index element={<HomePage />} />
-				</Route>
 				<Route path="/resume" element={<MainLayout />}>
 					<Route index element={<ResumePage />} />
+					<Route path="dev" element={<HomePage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
