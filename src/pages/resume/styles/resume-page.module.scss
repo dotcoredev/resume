@@ -1,0 +1,47 @@
+@use "../../../shared/styles/variables.scss";
+
+.wrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.header {
+		width: 100%;
+	}
+
+	.content {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+
+		.leftSide {
+			width: 100%;
+			min-width: 225px;
+			max-width: 240px;
+			min-height: 100%;
+			border-right: 1px dashed variables.$color-green;
+			box-sizing: border-box;
+			padding: 20px 0;
+			padding-right: 20px;
+
+			.section {
+				width: 100%;
+			}
+		}
+		.rightSide {
+			width: 100%;
+			min-height: 100%;
+			padding: 20px 0;
+			box-sizing: border-box;
+		}
+	}
+}
+
+.line {
+	width: 100%;
+	margin: 20px 0;
+	height: 2px;
+	//background-color: rgba(0, 0, 0, 0.7);
+	border-bottom: 1px dashed variables.$color-green;
+}

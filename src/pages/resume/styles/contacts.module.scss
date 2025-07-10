@@ -1,0 +1,35 @@
+@use "../../../shared/styles/variables.scss";
+
+.wrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	a.section {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		gap: 7px;
+		color: variables.$color;
+		outline: none;
+		text-decoration: none;
+
+		p {
+			font-weight: 300;
+			font-size: 15px;
+		}
+
+		.icon {
+			color: variables.$color-icon;
+			position: relative;
+			top: 1px;
+			font-size: 20px;
+			min-width: 20px;
+		}
+
+		.iconPhone {
+			transform: rotateZ(-93deg);
+		}
+	}
+}
