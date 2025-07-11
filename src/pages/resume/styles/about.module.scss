@@ -1,0 +1,45 @@
+@use "../../../shared/styles/variables.scss";
+
+.wrapper {
+	width: 100%;
+
+	h2 {
+		text-transform: uppercase;
+		font-weight: 400;
+		font-size: 19px;
+		letter-spacing: 2px;
+		color: variables.$color;
+	}
+
+	.content {
+		width: 100%;
+		margin-top: 15px;
+
+		p {
+			font-size: 14px;
+			font-weight: 300;
+			line-height: 19px;
+			color: #313131;
+		}
+
+		ul {
+			width: 100%;
+			box-sizing: border-box;
+			padding: 0 20px;
+			margin: 15px 0;
+
+			li {
+				font-weight: 500;
+				color: #7d7d7d;
+			}
+
+			ul {
+				margin: 0;
+
+				li {
+					font-weight: 300;
+				}
+			}
+		}
+	}
+}
