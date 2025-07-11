@@ -1,0 +1,76 @@
+@use "../../../shared/styles/variables.scss";
+
+.wrapper {
+	width: 100%;
+
+	h2 {
+		text-transform: uppercase;
+		font-weight: 400;
+		font-size: 19px;
+		letter-spacing: 2px;
+	}
+
+	.content {
+		width: 100%;
+		margin-top: 15px;
+
+		p {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 19px;
+			color: #313131;
+		}
+
+		.works {
+			width: 100%;
+
+			.workItem {
+				width: 100%;
+				margin: 20px 0;
+
+				h2 {
+					letter-spacing: normal;
+					font-size: 14px;
+					font-weight: 700;
+				}
+
+				p {
+					color: variables.$color;
+				}
+
+				.information {
+					width: 100%;
+
+					p {
+						font-weight: 400;
+						font-size: 15px;
+					}
+				}
+
+				.desc {
+					width: 100%;
+
+					ul {
+						margin: 3px 20px 10px;
+
+						li {
+							font-weight: 400;
+							font-size: 13px;
+							color: #555555;
+
+							a {
+								color: #444;
+								text-decoration: none;
+								transition: 0.3s all;
+
+								&:hover {
+									color: variables.$color-green;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

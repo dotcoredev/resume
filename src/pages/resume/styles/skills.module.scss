@@ -1,0 +1,85 @@
+@use "../../../shared/styles/variables.scss";
+
+.wrapper {
+	width: 100%;
+
+	h2 {
+		text-transform: uppercase;
+		font-size: 18px;
+		letter-spacing: 2px;
+		font-weight: 500;
+		color: variables.$color;
+	}
+
+	.section {
+		width: 100%;
+		margin-top: 15px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 5px;
+
+		.skill {
+			width: auto;
+			padding: 5px;
+			cursor: pointer;
+			position: relative;
+			overflow: hidden;
+
+			&:after {
+				content: "";
+				top: 0;
+				left: 0;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background: rgba(51, 51, 51, 0.05);
+				border-radius: 3px;
+				transition: 0.3s all;
+			}
+
+			&:before {
+				content: "";
+				left: 0;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background: variables.$color-green;
+				border-radius: 3px;
+				opacity: 0;
+				bottom: 0;
+				transform: translateY(100%);
+				transition: 0.35s all;
+			}
+
+			&:hover:before {
+				content: "";
+				bottom: 0;
+				left: 0;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				opacity: 1;
+				background: variables.$color-green;
+				transform: translateY(0%);
+				border-radius: 3px;
+				transition: 0.2s all;
+			}
+
+			p {
+				font-size: 16px;
+				font-weight: 300;
+				font-style: normal;
+				line-height: 15px;
+				color: variables.$color;
+				position: relative;
+				z-index: 1;
+				transition: 0.3s all;
+			}
+
+			&:hover p {
+				color: #fff;
+				transition: 0.3s all;
+			}
+		}
+	}
+}
