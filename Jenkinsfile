@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+        stage('Install pnpm') {
+            steps {
+                sh 'npm install -g pnpm'
+            }
+        }
+
         stage('Install') {
             steps {
                 sh 'pnpm install --frozen-lockfile'
