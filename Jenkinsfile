@@ -42,9 +42,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    sudo mkdir -p $DEPLOY_PATH
-                    sudo rm -rf $DEPLOY_PATH/*
-                    sudo cp -r dist/* $DEPLOY_PATH/
+                    mkdir -p $DEPLOY_PATH
+                    rm -rf $DEPLOY_PATH/*
+                    cp -r dist/* $DEPLOY_PATH/
                 '''
             }
         }
