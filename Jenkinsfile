@@ -1,11 +1,21 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:lts'
+        }
+    }
 
     environment {
         DEPLOY_PATH = "/var/projects/resume"
     }
 
     stages {
+        stage('check docker') {
+            steps {
+                sh 'docker -v'
+            }
+        }
+
         stage('Install pnpm') {
             steps {
                 sh 'npm install -g pnpm'
