@@ -10,15 +10,13 @@ pipeline {
     }
 
     stages {
-        stage('check docker') {
+        stage('Setup') {
             steps {
-                sh 'docker -v'
-            }
-        }
-
-        stage('Install pnpm') {
-            steps {
-                sh 'npm install pnpm'
+                sh '''
+                    corepack enable
+                    corepack prepare pnpm@latest --activate
+                    pnpm -v
+                '''
             }
         }
 
