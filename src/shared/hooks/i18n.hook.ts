@@ -8,7 +8,7 @@ export const useI18n = () => {
 	useEffect(() => {
 		const lang = searchParams.get("language") || "ru";
 		i18n.changeLanguage(lang);
-	}, []);
+	}, [searchParams]);
 
 	return i18n;
 };
