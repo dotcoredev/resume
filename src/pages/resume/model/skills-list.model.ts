@@ -11,22 +11,22 @@ export const SkillsList = [
 	},
 	{
 		id: 3,
-		title: "nodejs",
+		title: "Nodejs",
 		sort: 1,
 	},
 	{
 		id: 4,
-		title: "mongodb",
+		title: "MongoDB",
 		sort: 3,
 	},
 	{
 		id: 5,
-		title: "nginx",
+		title: "Nginx",
 		sort: 6,
 	},
 	{
 		id: 6,
-		title: "nestjs",
+		title: "Nestjs",
 		sort: 4,
 	},
 	{
@@ -46,7 +46,22 @@ export const SkillsList = [
 	},
 	{
 		id: 11,
-		title: "reactjs/nextjs",
+		title: "Reactjs",
 		sort: 1,
+	},
+	{
+		id: 12,
+		title: "Jenkins",
+		sort: 2,
+	},
+	{
+		id: 13,
+		title: "CI/CD",
+		sort: 2,
+	},
+	{
+		id: 11,
+		title: "Nextjs",
+		sort: 3,
 	},
 ];
