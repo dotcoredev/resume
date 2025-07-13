@@ -23,6 +23,8 @@ export const HomePage = () => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key.toLowerCase() === "r") {
 				navigate("/resume");
+			} else if (e.key.toLowerCase() === "p") {
+				navigate("/design-template");
 			}
 		};
 
