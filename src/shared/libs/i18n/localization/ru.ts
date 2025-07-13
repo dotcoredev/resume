@@ -38,21 +38,22 @@ export const ru = {
 				<li>Reactjs</li>
 				<li>RTK/Zustand</li>
 				<li>Apollo/Graphql</li>
-				<li>sass/css</li>
+				<li>Sass/CSS</li>
 			</ul>
 			<li>Backend</li>
 			<ul>
-				<li>nodejs</li>
-				<li>nestjs</li>
-				<li>mongodb/postgresql</li>
-				<li>nginx</li>
-				<li>redis</li>
+				<li>Nodejs</li>
+				<li>Nestjs</li>
+				<li>MongoDB/PostgreSQL</li>
+				<li>Nginx</li>
+				<li>Redis</li>
 			</ul>
 			<li>Devops</li>
 			<ul>
-				<li>docker</li>
-				<li>ci/cd</li>
-				<li>jenkins</li>
+				<li>Docker/Swarm</li>
+				<li>CI/CD</li>
+				<li>Jenkins</li>
+				<li>Nginx</li>
 			</ul>
 		</ul>
 		`,
