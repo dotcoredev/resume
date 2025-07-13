@@ -1,0 +1,29 @@
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	position: relative;
+
+	.canvas {
+		background-color: #111;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.title {
+		position: relative;
+		z-index: 1;
+		font-size: 50px;
+		color: #fff;
+		text-transform: uppercase;
+		font-weight: 100;
+		text-shadow: 8px 8px 15px rgb(0, 0, 0);
+		margin-right: 50px;
+		margin-bottom: 50px;
+		letter-spacing: 2px;
+		opacity: 0.5;
+	}
+}

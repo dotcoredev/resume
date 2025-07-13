@@ -1,0 +1,16 @@
+.scrollbarSection {
+	width: 100vw;
+	height: 100vh;
+	overflow-y: auto;
+
+	.wrapper {
+		width: 100%;
+		max-width: 1000px;
+		margin: 50px auto;
+		min-height: calc(100vh - 100px);
+		background: url(../../../../shared/assets/concrete_seamless.png);
+		box-sizing: border-box;
+		padding: 30px;
+		border-radius: 3px;
+	}
+}
