@@ -7,10 +7,12 @@ export class Canvas implements ICanvas {
 	ctx!: CanvasRenderingContext2D | null;
 	width: number;
 	height: number;
+	countFigures: number;
 
 	constructor() {
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
+		this.countFigures = 20;
 	}
 
 	init(canvasElement: HTMLCanvasElement) {
@@ -21,7 +23,9 @@ export class Canvas implements ICanvas {
 
 	run() {
 		if (this.ctx && this.canvas) {
-			new Draw(this.ctx, this.canvas, new Circle()).draw(111);
+			new Draw(this.ctx, this.canvas, Circle)
+				.createFigures(this.countFigures)
+				?.draw();
 		}
 	}
 
@@ -43,7 +47,14 @@ export class Canvas implements ICanvas {
 	}
 
 	private handleResize() {
-		this.width = window.innerWidth;
-		this.height = window.innerHeight;
+		if (!this.canvas || !this.ctx) return;
+		this.canvas.width = this.width = window.innerWidth;
+		this.canvas.height = this.height = window.innerHeight;
+
+		if (this.ctx && this.canvas) {
+			new Draw(this.ctx, this.canvas, Circle)
+				.createFigures(this.countFigures)
+				?.draw();
+		}
 	}
 }

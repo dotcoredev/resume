@@ -4,8 +4,8 @@ export interface IFigure {
 	x?: number;
 	y?: number;
 	radius?: number;
-	draw: (ctx: CanvasRenderingContext2D) => void;
-	params: (figureParams: TFigureParams) => IFigure;
+	draw: (ctx: CanvasRenderingContext2D) => IFigure;
+	update?: () => void;
 }
 
 export type TFigureParams = {
@@ -15,3 +15,5 @@ export type TFigureParams = {
 	y?: number;
 	radius?: number;
 };
+
+export type TFigure = new (params: TFigureParams) => IFigure;
