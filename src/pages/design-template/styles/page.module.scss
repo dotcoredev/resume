@@ -1,14 +1,12 @@
 .wrapper {
-	width: 100vw;
-	height: 100vh;
-	overflow-y: auto;
+	width: 100%;
 
 	.content {
 		width: 100%;
 		max-width: 1000px;
-		margin: 40px auto;
 		box-sizing: border-box;
-		padding: 10px 20px;
+		padding: 30px 20px;
+		margin: 0 auto;
 
 		blockquote {
 			margin-bottom: 5px;
