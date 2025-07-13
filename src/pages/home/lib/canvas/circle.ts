@@ -19,15 +19,15 @@ export class Circle implements IFigure {
 	}: TFigureParams) {
 		this.x = Math.random() * width;
 		this.y = Math.random() * height;
-		this.radius = Math.random() * radius + 400;
-		this.angle = Math.random() * Math.PI * 10;
-		this.speed = Math.random() * 0.0037;
+		this.radius = Math.random() * radius + 250;
+		this.angle = Math.random() * Math.PI * 420;
+		this.speed = Math.random() * 0.0017;
 
 		this.animX = 0;
 		this.animY = 0;
 
-		this.firstColor = `hsla(${Math.random() * 30 + 54}, 60%, 50%, 0.9)`;
-		this.secondColor = `hsla(${Math.random() * 30 + 64}, 80%, 35%, 0)`;
+		this.firstColor = `hsla(${Math.random() * 115}, 60%, 50%, 0.9)`;
+		this.secondColor = `hsla(${Math.random() * 55}, 70%, 50%, 0)`;
 		this.gradient = null;
 	}
 
@@ -50,7 +50,7 @@ export class Circle implements IFigure {
 		this.gradient?.addColorStop(1, this.secondColor);
 
 		ctx.imageSmoothingQuality = "high";
-		ctx.globalCompositeOperation = "overlay"; // или "overlay", "multiply"
+		ctx.globalCompositeOperation = "lighten"; // или "overlay", "multiply"
 
 		ctx.beginPath();
 		ctx.fillStyle = this.gradient!;

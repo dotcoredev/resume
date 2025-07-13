@@ -12,7 +12,7 @@ export class Canvas implements ICanvas {
 	constructor() {
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
-		this.countFigures = 20;
+		this.countFigures = 30;
 	}
 
 	init(canvasElement: HTMLCanvasElement) {
