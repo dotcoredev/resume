@@ -1,0 +1,59 @@
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	overflow-y: auto;
+
+	.content {
+		width: 100%;
+		max-width: 1000px;
+		margin: 40px auto;
+		box-sizing: border-box;
+		padding: 10px 20px;
+
+		blockquote {
+			margin-bottom: 5px;
+
+			p {
+				background: #5fa512;
+				padding: 5px 10px;
+				box-sizing: border-box;
+				color: #fff;
+				border-radius: 5px;
+				font-weight: 200;
+			}
+		}
+
+		hr {
+			margin: 15px 0;
+		}
+
+		ol,
+		ul {
+			padding: 10px 20px;
+			box-sizing: border-box;
+		}
+
+		h2 {
+			margin-bottom: 5px;
+			background: #fbc019;
+			box-sizing: border-box;
+			padding: 5px 10px;
+			color: #3f3f3f;
+			border-radius: 5px;
+			font-weight: 200;
+		}
+
+		pre {
+			background: #222;
+			border-radius: 10px;
+			box-sizing: border-box;
+			padding: 15px;
+
+			code {
+				color: #7db338;
+				font-weight: 300;
+				letter-spacing: 1px;
+			}
+		}
+	}
+}
