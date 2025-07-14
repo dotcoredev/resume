@@ -1,16 +1,7 @@
 import { useSelector } from "react-redux";
 import { useSocket } from "../../../shared/libs/socket-context/socket-context";
 import { useTodoSocketEvents } from "../../../entities/todo/api/todo-socket.api";
-
-interface RootState {
-	todos: {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		items: any[];
-		loading: boolean;
-		error: string | null;
-		lastUpdate: string | null;
-	};
-}
+import type { ITodoReducerState } from "../interfaces/todo-list.interface";
 
 export const TodoList: React.FC = () => {
 	const { isConnected, clientId } = useSocket();
@@ -19,7 +10,7 @@ export const TodoList: React.FC = () => {
 		loading,
 		error,
 		lastUpdate,
-	} = useSelector((state: RootState) => state.todos);
+	} = useSelector((state: ITodoReducerState) => state.todos);
 
 	// Подключаем WebSocket события для todo
 	useTodoSocketEvents();
