@@ -1,12 +1,12 @@
 export const SOCKET_CONFIG = {
 	url: import.meta.env.VITE_SOCKET_URL,
 	options: {
-		autoConnect: false,
-		transports: ["websocket"],
-		timeout: 20000,
+		autoConnect: false, // Устанавливаем autoConnect в false, чтобы управлять подключением вручную
+		transports: ["websocket"], // Используем только WebSocket транспорт
+		timeout: 20000, // Таймаут подключения
 		reconnection: true,
-		reconnectionAttempts: 5,
-		reconnectionDelay: 1000,
+		reconnectionAttempts: 5, // Максимальное количество попыток переподключения
+		reconnectionDelay: 1000, // Задержка между попытками переподключения
 	},
 };
 
