@@ -3,7 +3,7 @@ import { MainLayout } from "../layouts/main";
 import ResumePage from "../../pages/resume";
 import HomePage from "../../pages/home";
 import { ResumeLayout } from "../layouts/main";
-import DesignTemplatePage from "../../pages/design-template";
+import DesignTemplatePage from "../../pages/learning";
 import TodoPage from "../../pages/todo";
 import { AppProviders } from "../providers";
 
@@ -13,10 +13,7 @@ export const RouterProvider = () => {
 			<Routes>
 				<Route path="/" element={<MainLayout />}>
 					<Route index element={<HomePage />} />
-					<Route
-						path="/design-template"
-						element={<DesignTemplatePage />}
-					/>
+					<Route path="/learning" element={<DesignTemplatePage />} />
 					<Route
 						path="/chat"
 						element={

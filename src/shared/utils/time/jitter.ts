@@ -7,11 +7,11 @@ export function exponentialJitter(
 	const exponentialDelay = Math.min(
 		baseDelay * Math.pow(2, attempt - 1),
 		maxDelay
-	);
-	const jitter = generateJitter(jitterRange);
+	); // вычисляем экспоненциальную задержку с учетом максимальной задержки
+	const jitter = generateJitter(jitterRange); // генерируем случайный джиттер в заданном диапазоне
 	return exponentialDelay + jitter;
 }
 
 export function generateJitter(maxJitter: number = 1000): number {
-	return Math.random() * maxJitter;
+	return Math.random() * maxJitter; // генерируем случайное значение джиттера
 }

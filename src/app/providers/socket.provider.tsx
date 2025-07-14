@@ -7,9 +7,9 @@ import { SocketContext } from "../../shared/libs/socket-context/socket-context";
 
 export const SocketProvider: React.FC<ISocketProviderProps> = ({
 	children,
-	autoConnect = true,
+	autoConnect = false,
 	defaultRoom = "general",
-	namespace = "",
+	namespace = "/",
 }) => {
 	const [isConnected, setIsConnected] = useState(false);
 	const [clientId, setClientId] = useState<string>();
@@ -93,7 +93,6 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 	const contextValue = useMemo<ISocketContextValue>(
 		() => ({
 			socket: socketClient.getSocket,
-			connected: isConnected,
 			isConnected,
 			clientId,
 			connect,

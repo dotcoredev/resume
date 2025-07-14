@@ -21,10 +21,11 @@ export const HomePage = () => {
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
+			console.log("Key pressed:", e.key);
 			if (e.key.toLowerCase() === "r") {
 				navigate("/resume");
-			} else if (e.key.toLowerCase() === "p") {
-				navigate("/design-template");
+			} else if (e.key.toUpperCase() === "P") {
+				navigate("/learning");
 			} else if (e.key.toLowerCase() === "c") {
 				navigate("/chat");
 			}

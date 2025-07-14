@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { useSocket } from "../../../shared/libs/socket-context/socket-context";
 import { useTodoSocketEvents } from "../../../entities/todo/api/todo-socket.api";
-import { useEffect } from "react";
 
 interface RootState {
 	todos: {
@@ -14,19 +13,13 @@ interface RootState {
 }
 
 export const TodoList: React.FC = () => {
-	const { isConnected, clientId, socket } = useSocket();
+	const { isConnected, clientId } = useSocket();
 	const {
 		items: todos,
 		loading,
 		error,
 		lastUpdate,
 	} = useSelector((state: RootState) => state.todos);
-
-	useEffect(() => {
-		console.log("Socket connection status:", isConnected);
-		console.log("Client ID:", clientId);
-		console.log("Socket object:", socket);
-	}, [isConnected, clientId, socket]);
 
 	// Подключаем WebSocket события для todo
 	useTodoSocketEvents();

@@ -24,30 +24,30 @@ class SocketClient implements ISocketClient {
 				this.manager = new Manager(
 					SOCKET_CONFIG.url,
 					SOCKET_CONFIG.options as Partial<ManagerOptions>
-				);
-
-				this.socket = this.manager.socket(namespace);
-
-				this.socket.on(SOCKET_EVENTS.CONNECT, () => {
-					console.log("✅ Connected to WebSocket server");
-					this.reconnectAttempts = 0;
-					resolve();
-				});
+				); // Создаем менеджер с указанным URL и опциями
+				this.socket = this.manager.socket(namespace); // Создаем сокет для указанного пространства имен
+				this.socket.connect(); // Запускаем подключение
 
 				this.socket.on(SOCKET_EVENTS.DISCONNECT, (reason) => {
+					// Обрабатываем отключение
 					console.log(
 						"❌ Disconnected from WebSocket server:",
 						reason
 					);
-					this.handleReconnection();
+					this.handleReconnection(); // Обрабатываем переподключение
+				});
+
+				this.socket.on(SOCKET_EVENTS.CONNECT, () => {
+					console.log("✅ Connected to WebSocket server");
+					this.reconnectAttempts = 0; // Сбрасываем счетчик попыток переподключения
+					resolve();
 				});
 
 				this.socket.on("connect_error", (error) => {
+					// Обрабатываем ошибку подключения
 					console.error("❌ Connection error:", error);
 					reject(error);
 				});
-
-				this.socket.connect();
 			} catch (error) {
 				reject(error);
 			}
@@ -75,7 +75,7 @@ class SocketClient implements ISocketClient {
 				`🔄 Attempting to reconnect... (${this.reconnectAttempts}/${this.maxReconnectAttempts})`
 			);
 
-			const delay = exponentialJitter(this.reconnectAttempts, 500, 2000);
+			const delay = exponentialJitter(this.reconnectAttempts, 500, 2000); // Вычисляем задержку с экспоненциальным джиттером
 
 			this.reconnectTimer = setTimeout(() => {
 				if (this.socket && !this.socket.connected) {
@@ -84,6 +84,7 @@ class SocketClient implements ISocketClient {
 			}, delay);
 		} else {
 			console.error("❌ Max reconnection attempts reached");
+			this.reconnectAttempts = 0; // Сбрасываем счетчик попыток
 		}
 	}
 
