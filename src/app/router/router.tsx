@@ -4,6 +4,8 @@ import ResumePage from "../../pages/resume";
 import HomePage from "../../pages/home";
 import { ResumeLayout } from "../layouts/main";
 import DesignTemplatePage from "../../pages/design-template";
+import TodoPage from "../../pages/todo";
+import { AppProviders } from "../providers";
 
 export const RouterProvider = () => {
 	return (
@@ -14,6 +16,14 @@ export const RouterProvider = () => {
 					<Route
 						path="/design-template"
 						element={<DesignTemplatePage />}
+					/>
+					<Route
+						path="/chat"
+						element={
+							<AppProviders>
+								<TodoPage />
+							</AppProviders>
+						}
 					/>
 				</Route>
 				<Route path="/resume" element={<ResumeLayout />}>

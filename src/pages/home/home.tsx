@@ -25,6 +25,8 @@ export const HomePage = () => {
 				navigate("/resume");
 			} else if (e.key.toLowerCase() === "p") {
 				navigate("/design-template");
+			} else if (e.key.toLowerCase() === "c") {
+				navigate("/chat");
 			}
 		};
 
