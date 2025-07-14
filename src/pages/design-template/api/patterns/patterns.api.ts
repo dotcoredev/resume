@@ -1,6 +1,6 @@
-export async function getPatternsMD() {
+export async function getMD(name: string): Promise<string> {
 	return new Promise((resolve) => {
-		fetch("/HOW_TO_REMEMBER_PATTERNS.md")
+		fetch(name)
 			.then((response) => response.text())
 			.then((text) => resolve(text));
 	});
