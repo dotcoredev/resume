@@ -35,7 +35,12 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'pnpm run build'
+                withCredentials([string(credentialsId: 'VITE_SOCKET_URL', variable: 'VITE_SOCKET_URL')]) {
+                    sh '''
+                        echo "Building with socket URL: $VITE_SOCKET_URL"
+                        pnpm run build
+                    '''
+                }
             }
         }
 
