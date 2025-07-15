@@ -13,7 +13,7 @@ export const TodoList: React.FC = () => {
 		lastUpdate,
 	} = useSelector((state: ITodoReducerState) => state.todos);
 	const debounce = useDebounce((room: string) => {
-		socketClient.joinRoom(room);
+		socketClient!.joinRoom(room);
 	}, 1000);
 
 	// Подключаем WebSocket события для todo

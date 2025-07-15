@@ -13,13 +13,11 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 }) => {
 	const [isConnected, setIsConnected] = useState(false);
 	const [clientId, setClientId] = useState<string | undefined>();
-	const [currentSocket, setCurrentSocket] = useState(socketClient.getSocket);
 
 	// Подключение к серверу
 	const connect = useCallback(async () => {
 		try {
 			await socketClient.connect(namespace);
-			setCurrentSocket(socketClient.getSocket);
 			setIsConnected(true);
 			setClientId(socketClient.clientId);
 
@@ -46,13 +44,21 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 		socketClient.joinRoom(room);
 	}, []);
 
-	// Обработчики системных событий
 	useEffect(() => {
-		if (!currentSocket) {
-			console.log("Socket not ready, skipping event subscription");
-			return;
+		// Автоподключение
+		if (autoConnect) {
+			connect();
 		}
 
+		return () => {
+			if (autoConnect) {
+				disconnect();
+			}
+		};
+	}, [autoConnect, connect, disconnect]);
+
+	// Обработчики системных событий
+	useEffect(() => {
 		const handleConnect = () => {
 			setIsConnected(true);
 			setClientId(socketClient.clientId);
@@ -79,29 +85,20 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 		socketClient.on(SOCKET_EVENTS.CONNECTION, handleConnection);
 		socketClient.on(SOCKET_EVENTS.JOINED_ROOM, handleJoinedRoom);
 
-		// Автоподключение
-		if (autoConnect) {
-			connect();
-		}
-
 		// Cleanup при размонтировании
 		return () => {
 			socketClient.off(SOCKET_EVENTS.CONNECT, handleConnect);
 			socketClient.off(SOCKET_EVENTS.DISCONNECT, handleDisconnect);
 			socketClient.off(SOCKET_EVENTS.CONNECTION, handleConnection);
 			socketClient.off(SOCKET_EVENTS.JOINED_ROOM, handleJoinedRoom);
-
-			if (autoConnect) {
-				disconnect();
-			}
 		};
-	}, [autoConnect, connect, currentSocket, disconnect]);
+	}, [isConnected]);
 
 	// Мемоизированное значение контекста
 	const contextValue = useMemo<ISocketContextValue>(
 		() => ({
 			socket: socketClient.getSocket,
-			socketClient: socketClient,
+			socketClient,
 			isConnected,
 			clientId,
 			connect,

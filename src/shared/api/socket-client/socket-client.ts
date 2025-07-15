@@ -4,15 +4,12 @@ import type {
 	ISocketClient,
 	SocketEventCallback,
 } from "./interfaces/socket-client.interface";
-import { exponentialJitter } from "../../utils/time";
 
 class SocketClient implements ISocketClient {
 	private socket: Socket | null = null;
 	private manager: Manager | null = null;
-	private reconnectAttempts = 0;
-	private maxReconnectAttempts = 7;
-	private reconnectTimer: number | null = null;
 	private rooms: Set<string> = new Set();
+	private eventsQueue: Map<string, SocketEventCallback> = new Map();
 
 	// Подключение к серверу
 	connect(namespace: string): Promise<void> {
@@ -26,18 +23,20 @@ class SocketClient implements ISocketClient {
 				this.socket.removeAllListeners(); // Удаляем все предыдущие обработчики событий
 				this.socket.connect(); // Запускаем подключение
 
+				this.eventsQueue.forEach((callback, event) => {
+					this.on(event, callback); // Подписываемся на события из очереди
+				});
+				this.eventsQueue.clear(); // Очищаем очередь после подписки
+
 				this.socket.on(SOCKET_EVENTS.CONNECT, () => {
 					console.log("✅ Connected to WebSocket server");
 					this.joiningRooms();
-					this.reconnectAttempts = 0; // Сбрасываем счетчик попыток переподключения
 					resolve();
 				});
 
 				// Единый обработчик для всех типов отключений
 				const handleConnectionFailure = (reason: string | Error) => {
 					console.log("❌ Connection failed:", reason);
-					// Запускаем переподключение для всех случаев
-					this.handleReconnection();
 				};
 
 				this.socket.on(
@@ -63,36 +62,12 @@ class SocketClient implements ISocketClient {
 		}
 	}
 
-	// Обработка переподключения
-	private handleReconnection(): void {
-		console.log("🔄 Start attempting to reconnect...");
-		if (this.reconnectTimer) {
-			clearTimeout(this.reconnectTimer);
-		}
-
-		if (this.reconnectAttempts < this.maxReconnectAttempts) {
-			this.reconnectAttempts++;
-			console.log(
-				`🔄 Attempting to reconnect... (${this.reconnectAttempts}/${this.maxReconnectAttempts})`
-			);
-
-			const delay = exponentialJitter(this.reconnectAttempts, 200, 700); // Вычисляем задержку с экспоненциальным джиттером
-
-			this.reconnectTimer = setTimeout(() => {
-				if (this.socket && !this.socket.connected) {
-					this.socket.connect();
-				}
-			}, delay);
-		} else {
-			console.error("❌ Max reconnection attempts reached");
-			this.reconnectAttempts = 0; // Сбрасываем счетчик попыток
-		}
-	}
-
 	// Подписка на события
 	on(event: string, callback: SocketEventCallback): void {
 		if (this.socket) {
 			this.socket.on(event, callback);
+		} else {
+			this.eventsQueue.set(event, callback); // Сохраняем обработчик в очередь, если сокет не подключен
 		}
 	}
 
@@ -100,6 +75,8 @@ class SocketClient implements ISocketClient {
 	off(event: string, callback?: SocketEventCallback): void {
 		if (this.socket) {
 			this.socket.off(event, callback);
+		} else {
+			this.eventsQueue.clear(); // Удаляем обработчик из очереди, если сокет не подключен
 		}
 	}
 

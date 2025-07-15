@@ -3,7 +3,7 @@ import type { ISocketClient } from "../../../api/socket-client/interfaces/socket
 
 export interface ISocketContextValue {
 	socket: Socket | null;
-	socketClient: ISocketClient;
+	socketClient?: ISocketClient;
 	isConnected: boolean;
 	clientId: string | undefined;
 	connect: () => Promise<void>;
