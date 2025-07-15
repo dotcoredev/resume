@@ -12,17 +12,20 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 	namespace = "/",
 }) => {
 	const [isConnected, setIsConnected] = useState(false);
-	const [clientId, setClientId] = useState<string>();
+	const [clientId, setClientId] = useState<string | undefined>();
+	const [currentSocket, setCurrentSocket] = useState(socketClient.getSocket);
 
 	// Подключение к серверу
 	const connect = useCallback(async () => {
 		try {
 			await socketClient.connect(namespace);
+			setCurrentSocket(socketClient.getSocket);
 			setIsConnected(true);
 			setClientId(socketClient.clientId);
 
 			// Автоматически присоединяемся к комнате по умолчанию
 			if (defaultRoom) {
+				console.log(`Joining room: ${defaultRoom}`);
 				socketClient.joinRoom(defaultRoom);
 			}
 		} catch (error) {
@@ -45,6 +48,11 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 
 	// Обработчики системных событий
 	useEffect(() => {
+		if (!currentSocket) {
+			console.log("Socket not ready, skipping event subscription");
+			return;
+		}
+
 		const handleConnect = () => {
 			setIsConnected(true);
 			setClientId(socketClient.clientId);
@@ -87,12 +95,13 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 				disconnect();
 			}
 		};
-	}, [autoConnect, connect, disconnect]);
+	}, [autoConnect, connect, currentSocket, disconnect]);
 
 	// Мемоизированное значение контекста
 	const contextValue = useMemo<ISocketContextValue>(
 		() => ({
 			socket: socketClient.getSocket,
+			socketClient: socketClient,
 			isConnected,
 			clientId,
 			connect,

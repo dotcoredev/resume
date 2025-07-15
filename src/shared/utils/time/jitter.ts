@@ -1,8 +1,8 @@
 export function exponentialJitter(
-	attempt: number,
-	baseDelay: number = 1000,
-	maxDelay: number = 30000,
-	jitterRange: number = 1000
+	attempt: number, // номер попытки
+	baseDelay: number = 1000, // базовая задержка в миллисекундах
+	maxDelay: number = 30000, // максимальная задержка в миллисекундах
+	jitterRange: number = 1000 // максимальный джиттер в миллисекундах
 ): number {
 	const exponentialDelay = Math.min(
 		baseDelay * Math.pow(2, attempt - 1),

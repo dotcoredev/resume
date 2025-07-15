@@ -4,7 +4,7 @@ export const SOCKET_CONFIG = {
 		autoConnect: false, // Устанавливаем autoConnect в false, чтобы управлять подключением вручную
 		transports: ["websocket"], // Используем только WebSocket транспорт
 		timeout: 20000, // Таймаут подключения
-		reconnection: true,
+		reconnection: false,
 		reconnectionAttempts: 5, // Максимальное количество попыток переподключения
 		reconnectionDelay: 1000, // Задержка между попытками переподключения
 	},
@@ -15,6 +15,7 @@ export const SOCKET_EVENTS = {
 	CONNECT: "connect",
 	DISCONNECT: "disconnect",
 	CONNECTION: "connection",
+	CONNECT_ERROR: "connect_error",
 
 	// Todo события
 	TODO_CREATED: "todoCreated",

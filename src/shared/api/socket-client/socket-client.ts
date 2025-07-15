@@ -10,12 +10,8 @@ class SocketClient implements ISocketClient {
 	private socket: Socket | null = null;
 	private manager: Manager | null = null;
 	private reconnectAttempts = 0;
-	private maxReconnectAttempts = 5;
+	private maxReconnectAttempts = 7;
 	private reconnectTimer: number | null = null;
-
-	get getSocket(): Socket | null {
-		return this.socket;
-	}
 
 	// Подключение к серверу
 	connect(namespace: string): Promise<void> {
@@ -26,16 +22,8 @@ class SocketClient implements ISocketClient {
 					SOCKET_CONFIG.options as Partial<ManagerOptions>
 				); // Создаем менеджер с указанным URL и опциями
 				this.socket = this.manager.socket(namespace); // Создаем сокет для указанного пространства имен
+				this.socket.removeAllListeners(); // Удаляем все предыдущие обработчики событий
 				this.socket.connect(); // Запускаем подключение
-
-				this.socket.on(SOCKET_EVENTS.DISCONNECT, (reason) => {
-					// Обрабатываем отключение
-					console.log(
-						"❌ Disconnected from WebSocket server:",
-						reason
-					);
-					this.handleReconnection(); // Обрабатываем переподключение
-				});
 
 				this.socket.on(SOCKET_EVENTS.CONNECT, () => {
 					console.log("✅ Connected to WebSocket server");
@@ -43,11 +31,21 @@ class SocketClient implements ISocketClient {
 					resolve();
 				});
 
-				this.socket.on("connect_error", (error) => {
-					// Обрабатываем ошибку подключения
-					console.error("❌ Connection error:", error);
-					reject(error);
-				});
+				// Единый обработчик для всех типов отключений
+				const handleConnectionFailure = (reason: string | Error) => {
+					console.log("❌ Connection failed:", reason);
+					// Запускаем переподключение для всех случаев
+					this.handleReconnection();
+				};
+
+				this.socket.on(
+					SOCKET_EVENTS.DISCONNECT,
+					handleConnectionFailure
+				);
+				this.socket.on(
+					SOCKET_EVENTS.CONNECT_ERROR,
+					handleConnectionFailure
+				);
 			} catch (error) {
 				reject(error);
 			}
@@ -65,6 +63,7 @@ class SocketClient implements ISocketClient {
 
 	// Обработка переподключения
 	private handleReconnection(): void {
+		console.log("🔄 Start attempting to reconnect...");
 		if (this.reconnectTimer) {
 			clearTimeout(this.reconnectTimer);
 		}
@@ -75,7 +74,7 @@ class SocketClient implements ISocketClient {
 				`🔄 Attempting to reconnect... (${this.reconnectAttempts}/${this.maxReconnectAttempts})`
 			);
 
-			const delay = exponentialJitter(this.reconnectAttempts, 500, 2000); // Вычисляем задержку с экспоненциальным джиттером
+			const delay = exponentialJitter(this.reconnectAttempts, 200, 700); // Вычисляем задержку с экспоненциальным джиттером
 
 			this.reconnectTimer = setTimeout(() => {
 				if (this.socket && !this.socket.connected) {
@@ -114,6 +113,10 @@ class SocketClient implements ISocketClient {
 
 	// Присоединение к комнате
 	joinRoom(room: string): void {
+		if (room.trim() === "") {
+			console.warn("⚠️ Room name cannot be empty");
+			return;
+		}
 		this.emit(SOCKET_EVENTS.JOIN_TODO_ROOM, { room });
 	}
 
@@ -125,6 +128,10 @@ class SocketClient implements ISocketClient {
 	// Получение ID клиента
 	get clientId(): string | undefined {
 		return this.socket?.id;
+	}
+
+	get getSocket(): Socket | null {
+		return this.socket;
 	}
 }
 
