@@ -17,7 +17,7 @@ export const RouterProvider = () => {
 					<Route
 						path="/chat"
 						element={
-							<AppProviders>
+							<AppProviders namespace="/todos" autoConnect={true}>
 								<TodoPage />
 							</AppProviders>
 						}

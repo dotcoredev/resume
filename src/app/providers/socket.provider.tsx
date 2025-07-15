@@ -12,7 +12,7 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 	namespace = "/",
 }) => {
 	const [isConnected, setIsConnected] = useState(false);
-	const [clientId, setClientId] = useState<string>();
+	const [clientId, setClientId] = useState<string | undefined>();
 
 	// Подключение к серверу
 	const connect = useCallback(async () => {
@@ -23,6 +23,7 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 
 			// Автоматически присоединяемся к комнате по умолчанию
 			if (defaultRoom) {
+				console.log(`Joining room: ${defaultRoom}`);
 				socketClient.joinRoom(defaultRoom);
 			}
 		} catch (error) {
@@ -42,6 +43,19 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 	const joinRoom = useCallback((room: string) => {
 		socketClient.joinRoom(room);
 	}, []);
+
+	useEffect(() => {
+		// Автоподключение
+		if (autoConnect) {
+			connect();
+		}
+
+		return () => {
+			if (autoConnect) {
+				disconnect();
+			}
+		};
+	}, [autoConnect, connect, disconnect]);
 
 	// Обработчики системных событий
 	useEffect(() => {
@@ -71,28 +85,20 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
 		socketClient.on(SOCKET_EVENTS.CONNECTION, handleConnection);
 		socketClient.on(SOCKET_EVENTS.JOINED_ROOM, handleJoinedRoom);
 
-		// Автоподключение
-		if (autoConnect) {
-			connect();
-		}
-
 		// Cleanup при размонтировании
 		return () => {
 			socketClient.off(SOCKET_EVENTS.CONNECT, handleConnect);
 			socketClient.off(SOCKET_EVENTS.DISCONNECT, handleDisconnect);
 			socketClient.off(SOCKET_EVENTS.CONNECTION, handleConnection);
 			socketClient.off(SOCKET_EVENTS.JOINED_ROOM, handleJoinedRoom);
-
-			if (autoConnect) {
-				disconnect();
-			}
 		};
-	}, [autoConnect, connect, disconnect]);
+	}, [isConnected]);
 
 	// Мемоизированное значение контекста
 	const contextValue = useMemo<ISocketContextValue>(
 		() => ({
 			socket: socketClient.getSocket,
+			socketClient,
 			isConnected,
 			clientId,
 			connect,

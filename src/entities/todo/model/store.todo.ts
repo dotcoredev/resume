@@ -8,7 +8,7 @@ const initialState: TodoState = {
 	lastUpdate: null,
 };
 
-export const todoSlice = createSlice({
+const todoSlice = createSlice({
 	name: "todos",
 	initialState,
 	reducers: {
@@ -22,7 +22,7 @@ export const todoSlice = createSlice({
 		addTodoFromSocket: (state, action: PayloadAction<Todo>) => {
 			const existingIndex = state.items.findIndex(
 				(todo) => todo._id === action.payload._id
-			);
+			); // Проверяем, существует ли todo с таким же ID
 
 			if (existingIndex === -1) {
 				state.items.unshift(action.payload); // Добавляем в начало

@@ -2,18 +2,27 @@ import { useSelector } from "react-redux";
 import { useSocket } from "../../../shared/libs/socket-context/socket-context";
 import { useTodoSocketEvents } from "../../../entities/todo/api/todo-socket.api";
 import type { ITodoReducerState } from "../interfaces/todo-list.interface";
+import { useDebounce } from "../../../shared/hooks/debounce.hook";
 
 export const TodoList: React.FC = () => {
-	const { isConnected, clientId } = useSocket();
+	const { isConnected, clientId, socketClient } = useSocket();
 	const {
 		items: todos,
 		loading,
 		error,
 		lastUpdate,
 	} = useSelector((state: ITodoReducerState) => state.todos);
+	const debounce = useDebounce((room: string) => {
+		socketClient!.joinRoom(room);
+	}, 1000);
 
 	// Подключаем WebSocket события для todo
 	useTodoSocketEvents();
+
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		debounce(value);
+	};
 
 	if (loading) {
 		return <div className="loading">Loading todos...</div>;
@@ -27,6 +36,16 @@ export const TodoList: React.FC = () => {
 		<div className="todo-list">
 			<div className="todo-list__header">
 				<h2>Todo List</h2>
+
+				{isConnected && (
+					<div>
+						<input
+							placeholder="Enter room title"
+							onChange={onChange}
+						/>
+					</div>
+				)}
+
 				<div className="connection-status">
 					<span
 						className={`status ${

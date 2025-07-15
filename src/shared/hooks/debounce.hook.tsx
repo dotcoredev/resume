@@ -1,15 +1,18 @@
 import { useRef } from "react";
 
-export const useDebounce = (fn: () => void, delay: number) => {
+export const useDebounce = <T extends unknown[]>(
+	fn: (...args: T) => void,
+	delay: number
+) => {
 	const timer = useRef<number | null>(null);
 
-	const debounce = () => {
+	const debounce = (...args: T) => {
 		if (timer.current) {
 			clearTimeout(timer.current);
 		}
 
-		timer.current = setTimeout(() => {
-			fn();
+		timer.current = window.setTimeout(() => {
+			fn(...args);
 		}, delay);
 	};
 

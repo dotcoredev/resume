@@ -25,9 +25,18 @@ export const TodoPage: React.FC = () => {
 				</div>
 			</header>
 
-			<main className="todos-page__content">
-				<TodoList />
-			</main>
+			{isConnected ? (
+				<main className="todos-page__content">
+					<TodoList />
+				</main>
+			) : (
+				<div className="todos-page__disconnected">
+					<p>
+						Please connect to the WebSocket server to view and
+						manage your todos.
+					</p>
+				</div>
+			)}
 		</div>
 	);
 };
