@@ -12,6 +12,7 @@ class SocketClient implements ISocketClient {
 	private reconnectAttempts = 0;
 	private maxReconnectAttempts = 7;
 	private reconnectTimer: number | null = null;
+	private rooms: Set<string> = new Set();
 
 	// Подключение к серверу
 	connect(namespace: string): Promise<void> {
@@ -27,6 +28,7 @@ class SocketClient implements ISocketClient {
 
 				this.socket.on(SOCKET_EVENTS.CONNECT, () => {
 					console.log("✅ Connected to WebSocket server");
+					this.joiningRooms();
 					this.reconnectAttempts = 0; // Сбрасываем счетчик попыток переподключения
 					resolve();
 				});
@@ -117,7 +119,16 @@ class SocketClient implements ISocketClient {
 			console.warn("⚠️ Room name cannot be empty");
 			return;
 		}
-		this.emit(SOCKET_EVENTS.JOIN_TODO_ROOM, { room });
+		this.rooms.add(room);
+		this.joiningRooms();
+	}
+
+	joiningRooms(): void {
+		if (this.rooms.size === 0) return;
+		this.rooms.forEach((room) => {
+			console.log(`Joining room: ${room}`);
+			this.emit(SOCKET_EVENTS.JOIN_TODO_ROOM, { room });
+		});
 	}
 
 	// Проверка состояния подключения

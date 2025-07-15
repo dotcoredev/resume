@@ -8,7 +8,7 @@ const initialState: TodoState = {
 	lastUpdate: null,
 };
 
-export const todoSlice = createSlice({
+const todoSlice = createSlice({
 	name: "todos",
 	initialState,
 	reducers: {
