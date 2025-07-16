@@ -21,6 +21,11 @@
 			}
 		}
 
+		p {
+			font-weight: 300;
+			margin: 10px 0;
+		}
+
 		hr {
 			margin: 15px 0;
 		}
@@ -31,7 +36,8 @@
 			box-sizing: border-box;
 		}
 
-		h2 {
+		h2,
+		h3 {
 			margin-bottom: 5px;
 			background: #fbc019;
 			box-sizing: border-box;
