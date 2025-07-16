@@ -1,4 +1,6 @@
-class IconSkillCanvas {
+import type { ICanvas } from "../../interfaces/canvas.interface";
+
+class IconSkillCanvas implements ICanvas {
 	private canvas!: HTMLCanvasElement;
 	private ctx!: CanvasRenderingContext2D | null;
 	private width!: number;
@@ -44,7 +46,7 @@ class IconSkillCanvas {
 		this.baseCtx.drawImage(this.image, x, y, size, size);
 	}
 
-	draw() {
+	private draw() {
 		if (!this.ctx || !this.baseCtx || !this.baseCanvas) {
 			console.log("ctx is null");
 			return;
@@ -79,7 +81,7 @@ class IconSkillCanvas {
 		this.ctx.putImageData(imageData, 0, 0);
 	}
 
-	update() {
+	private update() {
 		this.ctx!.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.draw();
 		this.animationID = requestAnimationFrame(() => this.update());
@@ -105,9 +107,7 @@ class IconSkillCanvas {
 		if (this.baseCtx) {
 			this.baseCtx.clearRect(0, 0, this.width, this.height);
 		}
-
-		this.image.src = "";
 	}
 }
 
-export const iconSkillCanvas = new IconSkillCanvas();
+export { IconSkillCanvas };
