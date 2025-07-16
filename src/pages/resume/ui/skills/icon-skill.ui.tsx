@@ -1,21 +1,22 @@
 import { memo, useEffect, useRef, type FC } from "react";
 import styles from "../../styles/skills.module.scss";
-import { iconSkillCanvas } from "../../lib/icon-skill-canvas/icon-skill-canvas";
+import { IconSkillCanvas } from "../../lib/icon-skill-canvas/icon-skill-canvas";
+import type { ICanvas } from "../../interfaces/canvas.interface";
 
 export const IconSkill: FC<{ isAnimating?: boolean; iconSrc: string }> = memo(
 	({ isAnimating, iconSrc }) => {
 		const canvasRef = useRef<HTMLCanvasElement>(null);
 		const parentRef = useRef<HTMLDivElement>(null);
+		const iconSkillCanvas = useRef<ICanvas>(new IconSkillCanvas());
 
 		useEffect(() => {
+			const canvas = iconSkillCanvas.current;
 			if (isAnimating && canvasRef.current && parentRef.current) {
-				iconSkillCanvas
-					.init(canvasRef.current, 70, 70, iconSrc)
-					.start();
+				canvas.init(canvasRef.current, 70, 70, iconSrc).start();
 			} else {
-				iconSkillCanvas.stop();
+				canvas.stop();
 			}
-		}, [isAnimating, canvasRef, parentRef, iconSrc]);
+		}, [isAnimating, iconSrc]);
 
 		return (
 			<section ref={parentRef} className={styles.icon}>
