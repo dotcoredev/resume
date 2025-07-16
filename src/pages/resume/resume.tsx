@@ -3,7 +3,7 @@ import styles from "./styles/resume-page.module.scss";
 import { Contacts } from "./ui/contacts.ui";
 import { Line } from "./ui/line.ui";
 import { Education } from "./ui/education.ui";
-import { Skills } from "./ui/skills.ui";
+import { Skills } from "./ui/skills/skills.ui";
 import { About } from "./ui/about.ui";
 import { WorkExperience } from "./ui/work-experience/work-experience.ui";
 
