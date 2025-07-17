@@ -35,4 +35,8 @@ export const pages = [
 		title: "React Hooks v2",
 		src: "posts/react_hooks_v2.md",
 	},
+	{
+		title: "Авторизация в WebSocket-соединениях",
+		src: "posts/essay_websocket_auth_nestjs.md",
+	},
 ];
