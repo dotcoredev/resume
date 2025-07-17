@@ -6,10 +6,15 @@ import { Education } from "./ui/education.ui";
 import { Skills } from "./ui/skills/skills.ui";
 import { About } from "./ui/about.ui";
 import { WorkExperience } from "./ui/work-experience/work-experience.ui";
+import { Seo } from "../../shared/ui/helmet";
 
 export const ResumePage = () => {
 	return (
 		<div className={styles.wrapper}>
+			<Seo
+				title="Николай Ерофеев. Резюме. Fullstack разработчик."
+				description="Резюме Николая Ерофеева. Fullstack разработчик."
+			/>
 			<section className={styles.header}>
 				<Header />
 			</section>

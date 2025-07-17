@@ -1,12 +1,13 @@
 import { useEffect, useRef } from "react";
-import { Canvas } from "./lib/canvas/canvas";
-import styles from "./styles/home.module.scss";
+import { Canvas } from "../lib/canvas/canvas";
+import styles from "../styles/home.module.scss";
 import { useNavigate } from "react-router";
+import { Seo } from "../../../shared/ui/helmet";
 
 export const HomePage = () => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const canvas = new Canvas();
+	const canvas = useRef(new Canvas()).current;
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -40,6 +41,7 @@ export const HomePage = () => {
 
 	return (
 		<section className={styles.wrapper}>
+			<Seo title="Dotcore." description="Dotcore" />
 			<canvas className={styles.canvas} ref={canvasRef}>
 				canvas
 			</canvas>

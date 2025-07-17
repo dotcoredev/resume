@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import todoReducer from "../../entities/todo/model/store.todo";
+import learningReducer from "../../pages/learning/model/store.learning";
 
 export const store = configureStore({
 	reducer: {
 		todos: todoReducer,
+		learning: learningReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({

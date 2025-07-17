@@ -1,12 +1,17 @@
 import React from "react";
 import { TodoList } from "../../../features/todo-list/ui/todo-list";
 import { useSocket } from "../../../shared/libs/socket-context/socket-context";
+import { Seo } from "../../../shared/ui/helmet";
 
 export const TodoPage: React.FC = () => {
 	const { isConnected, connect, disconnect } = useSocket();
 
 	return (
 		<div className="todos-page">
+			<Seo
+				title="Todo real-time"
+				description="Управление todo листо в реалтайме"
+			/>
 			<header className="todos-page__header">
 				<h1>📝 Real-time Todos</h1>
 				<div className="connection-controls">
