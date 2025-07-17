@@ -1,7 +1,6 @@
 import React, { type ReactNode } from "react";
-import { Provider } from "react-redux";
-import { store } from "../store/store";
 import { SocketProvider } from "./socket.provider";
+import { StoreProvider } from "./store.provider";
 
 export const AppProviders: React.FC<{
 	children: ReactNode;
@@ -10,7 +9,7 @@ export const AppProviders: React.FC<{
 	autoConnect?: boolean;
 }> = ({ children, namespace = "/", defaultRoom = "", autoConnect = false }) => {
 	return (
-		<Provider store={store}>
+		<StoreProvider>
 			<SocketProvider
 				namespace={namespace}
 				autoConnect={autoConnect}
@@ -18,6 +17,6 @@ export const AppProviders: React.FC<{
 			>
 				{children}
 			</SocketProvider>
-		</Provider>
+		</StoreProvider>
 	);
 };

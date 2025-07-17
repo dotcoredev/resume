@@ -1,1 +1,1 @@
-export { DesignTemplatePage as default } from "./design-template.page";
+export { LearningPage as default } from "./ui/Learning.page";

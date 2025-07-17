@@ -1,6 +1,18 @@
 .wrapper {
 	width: 100%;
 
+	.iconBar {
+		position: fixed;
+		top: 10px;
+		left: 20px;
+		z-index: 100;
+		cursor: pointer;
+
+		@media screen and (max-width: 768px) {
+			font-size: 25px;
+		}
+	}
+
 	.content {
 		width: 100%;
 		max-width: 1000px;
@@ -53,17 +65,25 @@
 		ul {
 			padding: 10px 20px;
 			box-sizing: border-box;
+
+			li {
+				margin: 10px 0;
+			}
 		}
 
 		h2,
 		h3 {
-			margin-bottom: 5px;
+			margin: 7px 0;
 			background: #fbc019;
 			box-sizing: border-box;
 			padding: 5px 10px;
 			color: #3f3f3f;
 			border-radius: 5px;
 			font-weight: 200;
+		}
+
+		h2 {
+			background: #dbc78e;
 		}
 
 		pre {
